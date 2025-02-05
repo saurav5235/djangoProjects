@@ -5,7 +5,7 @@ from .models import Item
 
 
 def index(request):
-    param = {'foodnamelist': Item.objects.all()}
+    param = {'items': Item.objects.all()}
     return render(request, "food/index.html", param)
 
 
