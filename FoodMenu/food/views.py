@@ -27,3 +27,23 @@ def create_item(request):
 
     return render(request, "food/item-form.html", {'form': form})
 
+
+def update_item(request, item_id):
+    item_obj = Item.objects.get(pk=item_id)
+    form = ItemForm(request.POST or None, instance=item_obj)
+
+    if form.is_valid():
+        form.save()
+        return redirect("food:index")
+
+    return render(request, "food/item-form.html", {"form": form, 'item': item_obj})
+
+
+def delete_item(request, item_id):
+    item_obj = Item.objects.get(pk=item_id)
+
+    if request.method == "POST":
+        item_obj.delete()
+        return redirect("food:index")
+
+    return render(request, "food/item-delete.html")
